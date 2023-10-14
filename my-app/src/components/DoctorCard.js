@@ -14,10 +14,17 @@ export default function DoctorCard({ consultant }) {
       <div className="flex flex-col gap-5">
         <div className="flex gap-5">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            <img
-              src="https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg"
-              className="w-full h-full object-cover"
-            />
+            {consultant.image ? (
+              <img
+                src={consultant.image}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/005/520/145/original/cartoon-drawing-of-a-doctor-vector.jpg"
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-xl font-semibold leading-none tracking-tight">
