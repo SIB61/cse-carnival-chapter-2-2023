@@ -27,7 +27,7 @@ export default async (req, res) => {
           registrationNumber: fields.registrationNumber,
           degrees: [
             {
-              name: fields.degrees,
+              name: fields.degree,
               certificate: certificate,
               institution: fields.institution,
             },

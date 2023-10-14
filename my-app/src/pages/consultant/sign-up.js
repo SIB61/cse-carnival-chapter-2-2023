@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { fields } from "@/lib/constants/depts";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
@@ -82,22 +84,23 @@ export default function () {
               />
             </div>
 
-            <div className="w-full">
+            <div>
               <Label>Category</Label>
-
-              <Select className="w-full">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a fruit" />
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Domain" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Fruits</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
+                  <ScrollArea className=" h-40 w-max">
+                    <SelectGroup>
+                      <SelectLabel>Domain</SelectLabel>
+                      {Object.keys(fields).map((field) => (
+                        <SelectItem value={field}>
+                          {fields[field].title}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </ScrollArea>
                 </SelectContent>
               </Select>
             </div>
