@@ -14,17 +14,6 @@ const consultantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  degrees: [
-    {
-      name: String,
-      institute: String,
-      certificate: String,
-    },
-  ],
 });
 
 export default mongoose.models?.Consultant ??

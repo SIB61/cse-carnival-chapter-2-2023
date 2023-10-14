@@ -14,16 +14,25 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dateOfBirth: Date,
-  gender: String,
-  bloodGroup: {
+  role: {
     type: String,
-    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    enum: ["CONSULTEE", "CONSULTANT", "ADMIN"],
   },
-  mobileNumber: String,
-  address: String,
-  city: String,
-  country: String,
+  consulteeData: {},
+  consultantData: {
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    degrees: [
+      {
+        name: String,
+        institute: String,
+        certificate: String,
+      },
+    ],
+  },
+  adminData: {},
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", userSchema);
