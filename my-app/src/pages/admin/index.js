@@ -23,19 +23,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { useRouter } from "next/router";
 
 export default function TableDemo({ consultants }) {
   const [cArr, setCArr] = useState(consultants);
+  const router = useRouter();
   const approveConsultant = async (id) => {
     try {
       await axios.patch(`/api/consultants/${id}/approve`, {});
+      router.reload();
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <div className="p-10">
+    <div className="p-10 flex">
       <Card>
         <CardHeader>
           <CardTitle>Consultants</CardTitle>
@@ -59,28 +62,13 @@ export default function TableDemo({ consultants }) {
                 <TableRow key={c._id}>
                   <TableCell className="font-medium">{c.name}</TableCell>
                   <TableCell>
-                    {!c.consultantData.isVerified ? (
-                      <span className="flex gap-2">
-                        Pending
-                        <Button
-                          variant="ghost"
-                          className="rounded-full"
-                          size="icon"
-                        >
-                          <AiOutlineCheck />
-                        </Button>
-                      </span>
-                    ) : (
-                      "Verified"
-                    )}
+                    {!c.consultantData.isVerified ? "Pending" : "Verified"}
                   </TableCell>
                   <TableCell>{c.consultantData.degrees[0]?.name}</TableCell>
                   <TableCell>
                     {c.consultantData.degrees[0]?.institution}
                   </TableCell>
-                  <TableCell>
-                    {c.consultantData.degrees[0]?.registrationNumber}
-                  </TableCell>
+                  <TableCell>{c.consultantData.registrationNumber}</TableCell>
                   <TableCell>
                     <a
                       href={c.consultantData.degrees[0]?.certificate}

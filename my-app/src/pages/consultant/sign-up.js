@@ -8,7 +8,18 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { fields } from "@/lib/constants/depts";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
@@ -75,25 +86,38 @@ export default function () {
 
             <div>
               <Label>Category</Label>
-              <Input
-                placeholder="category"
-                {...register("category", { required: true })}
-              />
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Domain" />
+                </SelectTrigger>
+                <SelectContent>
+                  <ScrollArea className=" h-40 w-max">
+                    <SelectGroup>
+                      <SelectLabel>Domain</SelectLabel>
+                      {Object.keys(fields).map((field) => (
+                        <SelectItem value={field}>
+                          {fields[field].title}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
               <Label>Degree</Label>
               <Input
-                placeholder="degrees"
-                {...register("degrees", { required: true })}
+                placeholder="degree"
+                {...register("degree", { required: true })}
               />
             </div>
 
             <div>
               <Label>Institution</Label>
               <Input
-                placeholder="degrees"
-                {...register("degrees", { required: true })}
+                placeholder="institution"
+                {...register("institution", { required: true })}
               />
             </div>
 
