@@ -16,4 +16,16 @@ const createUser = async (req, res) => {
   });
 };
 
-export { createUser };
+const getUsers = async (req, res) => {
+  await connectDb();
+  const users = await user
+    .find({ role: "CONSULTEE" })
+    .select("-password -__v")
+    .lean();
+  return res.status(200).json({
+    message: "Users fetched successfully",
+    users,
+  });
+};
+
+export { createUser, getUsers };

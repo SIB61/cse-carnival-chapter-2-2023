@@ -1,12 +1,9 @@
-import { createUser, getUsers } from "@/lib/service/user";
+import { getConsultants } from "@/lib/service/consultant";
 
 const handler = async (req, res) => {
   switch (req.method) {
-    case "POST":
-      return await createUser(req, res);
-
     case "GET":
-      return await getUsers(req, res);
+      return await getConsultants(req, res);
 
     default:
       res.status(405);
