@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import appointment from "./appointment";
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -35,11 +36,19 @@ const userSchema = new mongoose.Schema({
     ],
   },
   adminData: {},
+  gender: String,
+  dateOfBirth: Date,
   mobileNumber: String,
   address: String,
   city: String,
   country: String,
   image: String,
+  appointments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "appointment",
+    },
+  ],
 });
 
-export default mongoose.models?.User ?? mongoose.model("User", userSchema);
+export default mongoose.models?.user ?? mongoose.model("user", userSchema);
