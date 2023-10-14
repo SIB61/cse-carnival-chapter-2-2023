@@ -35,6 +35,11 @@ const userSchema = new mongoose.Schema({
     ],
   },
   adminData: {},
+  mobileNumber: String,
+  address: String,
+  city: String,
+  country: String,
+  image: String,
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", userSchema);
