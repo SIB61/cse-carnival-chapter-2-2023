@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout";
+import { SocketProvider } from "@/components/socket-provider";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 
@@ -8,9 +9,11 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SocketProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SocketProvider>
     </SessionProvider>
   );
 }
