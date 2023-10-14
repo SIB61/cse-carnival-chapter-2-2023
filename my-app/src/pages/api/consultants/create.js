@@ -1,5 +1,7 @@
 import { parseForm } from "@/helpers/helpers";
+import connectDb from "@/lib/db/connect";
 import user from "@/models/user";
+import { hashSync } from "bcrypt";
 
 export const config = {
   api: {
@@ -11,21 +13,32 @@ export default async (req, res) => {
   switch (req.method) {
     case "POST":
       const { fields, files } = await parseForm(req);
-      console.log(fields.name, fields, files);
+
+      const certificate = files.certificates
+        ? "http://localhost:3000/uploads/" + files.certificates?.newFilename
+        : undefined;
+
       const consultant = {
         name: fields.name,
         email: fields.email,
-        password: fields.password,
+        password: hashSync(fields.password, 10),
         role: "CONSULTANT",
         consultantData: {
+          registrationNumber: fields.registrationNumber,
           degrees: [
             {
-              name: fields.degree,
+              name: fields.degrees,
+              certificate: certificate,
+              institution: fields.institution,
             },
           ],
         },
       };
+
+      connectDb();
+      await user.create(consultant);
       res.json({});
+
       break;
 
     default:
