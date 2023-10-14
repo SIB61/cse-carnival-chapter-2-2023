@@ -11,11 +11,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import user from "@/models/user";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineDownload } from "react-icons/ai";
 import { CiMenuKebab } from "react-icons/ci";
 import { useState } from "react";
 import connectDb from "@/lib/db/connect";
-import { ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
 export default function TableDemo({ consultants }) {
   const [cArr, setCArr] = useState(consultants);
@@ -75,12 +82,21 @@ export default function TableDemo({ consultants }) {
                     {c.consultantData.degrees[0]?.registrationNumber}
                   </TableCell>
                   <TableCell>
-                    <a href={c.consultantData.degrees[0]?.certificate}></a>
+                    <a
+                      href={c.consultantData.degrees[0]?.certificate}
+                      download={"file"}
+                    >
+                      <Button size="icon" variant="outline">
+                        <AiOutlineDownload />
+                      </Button>
+                    </a>
                   </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="outline" size="icon">
-                      <CiMenuKebab />
-                    </Button>
+                  <TableCell>
+                    {!c.consultantData.isVerified && (
+                      <Button onClick={() => approveConsultant(c._id)}>
+                        verify
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
