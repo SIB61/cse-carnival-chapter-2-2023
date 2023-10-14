@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     ],
   },
   adminData: {},
+  mobileNumber: String,
+  address: String,
+  city: String,
+  country: String,
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", userSchema);
