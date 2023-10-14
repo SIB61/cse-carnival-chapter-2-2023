@@ -55,4 +55,48 @@ const getAppointments = async (req, res) => {
   return appointments;
 };
 
-export { requestAppointment, getAppointments };
+const getAppointment = async (id) => {
+  await connectDb();
+  const data = await appointment
+    .findById(id)
+    .populate({
+      path: "consultee",
+      select: {
+        image: 1,
+        name: 1,
+        dateOfBirth: 1,
+      },
+    })
+    .select("appointmentDate consultee note status -_id")
+    .lean();
+  return data;
+};
+
+const updateAppointment = async (id, status, time) => {
+  await connectDb();
+  const updateData = {};
+  if (time) {
+    updateData.time = time;
+  }
+  updateData.status = status;
+  const data = await appointment
+    .findByIdAndUpdate(id, updateData, { new: true })
+    .populate({
+      path: "consultee",
+      select: {
+        image: 1,
+        name: 1,
+        dateOfBirth: 1,
+      },
+    })
+    .select("appointmentDate consultee note status -_id")
+    .lean();
+  return data;
+};
+
+export {
+  requestAppointment,
+  getAppointments,
+  getAppointment,
+  updateAppointment,
+};
