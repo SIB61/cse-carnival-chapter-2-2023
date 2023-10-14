@@ -24,10 +24,12 @@ const userSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    category: String,
+    registrationNumber: String,
     degrees: [
       {
         name: String,
-        institute: String,
+        institution: String,
         certificate: String,
       },
     ],
