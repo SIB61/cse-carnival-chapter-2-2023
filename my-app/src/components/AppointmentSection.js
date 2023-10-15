@@ -26,6 +26,7 @@ export default function AppointmentSection({}) {
     const response = await axios.post(`/api/users/appointment`, requestBody);
     if (response.status === 201) {
       setIsLoading(false);
+      router.push(`/user/appointments`);
     }
   };
   return (

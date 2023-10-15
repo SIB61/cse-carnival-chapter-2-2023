@@ -14,7 +14,7 @@ export default function ConsultantDashBoard({ data }) {
   return (
     <div className="flex flex-col p-8 gap-4">
       <div>Appointments</div>
-      <div className="flex gap-6">
+      <div className="flex flex-wrap gap-6">
         {data.appointments.map((appointment) => {
           return <UserAppointmentSection appointment={appointment} />;
         })}
