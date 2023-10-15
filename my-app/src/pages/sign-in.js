@@ -11,15 +11,20 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 export default function () {
   const { formState, register, handleSubmit } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
   const { status, data: session } = useSession();
   const router = useRouter();
   const login = async (data) => {
+    setIsLoading(true);
     await signIn("credentials", data);
+    setIsLoading(false);
   };
 
   console.log(session);
@@ -33,7 +38,7 @@ export default function () {
           router.push("/consultant");
           break;
         case "CONSULTEE":
-          router.push("/");
+          router.push("/user");
           break;
       }
     }
@@ -60,11 +65,25 @@ export default function () {
               <Label>Password</Label>
               <Input
                 placeholder="enter your password"
+                type="password"
                 {...register("password", { required: true })}
               />
             </div>
 
-            <Button disabled={!formState.isValid}>Sign In</Button>
+            <Button disabled={!formState.isValid}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading ? "Please wait" : "Sign In"}
+            </Button>
+            <div className="self-center">
+              Not Registered?{" "}
+              <Link
+                href={"/user/sign-up"}
+                className=" cursor-pointer text-blue-500 underline"
+              >
+                Sign up
+              </Link>{" "}
+              here
+            </div>
           </form>
         </CardContent>
       </Card>
