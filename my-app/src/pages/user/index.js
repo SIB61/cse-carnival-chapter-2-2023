@@ -27,12 +27,6 @@ export default function UserHomePage({ data }) {
           {data.consultants.map((consultant) => (
             <DoctorCard consultant={consultant} />
           ))}
-          {data.consultants.map((consultant) => (
-            <DoctorCard consultant={consultant} />
-          ))}
-          {data.consultants.map((consultant) => (
-            <DoctorCard consultant={consultant} />
-          ))}
         </div>
       </div>
     </div>

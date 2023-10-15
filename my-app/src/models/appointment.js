@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import user from "./user";
 
 const appointmentSchema = new mongoose.Schema(
   {
@@ -21,5 +22,5 @@ const appointmentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models?.Appointment ??
-  mongoose.model("Appointment", appointmentSchema);
+export default mongoose.models?.appointment ??
+  mongoose.model("appointment", appointmentSchema);
