@@ -48,14 +48,6 @@ export default function DoctorInfo({ consultant }) {
           culpa qui officia deserunt mollit anim id est laborum."
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="font-semibold">Specialize</div>
-        <div></div>
-      </div>
-      <div className="flex flex-col">
-        <div className="font-semibold">Expertise</div>
-        <div></div>
-      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function UserSignUp({}) {
     setIsLoading(true);
     const response = await axios.post(`/api/users/`, userData);
     if (response.status === 201) {
-      router.push("/user");
+      router.push("/sign-in");
     }
     setIsLoading(false);
   };

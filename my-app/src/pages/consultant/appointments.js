@@ -12,8 +12,8 @@ export default function ConsultantDashBoard({ data }) {
     console.log(data.appointments);
   }, []);
   return (
-    <div className="flex flex-col">
-      <div>Appointments Today</div>
+    <div className="flex flex-col p-4 gap-4">
+      <div>Appointments</div>
       {data.appointments.map((appointment) => {
         console.log(appointment);
         return <PatientCard appointment={appointment} />;

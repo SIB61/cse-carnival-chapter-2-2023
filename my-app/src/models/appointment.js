@@ -16,6 +16,7 @@ const appointmentSchema = new mongoose.Schema(
       enum: ["APPROVED", "PENDING", "DECLINED"],
       default: "PENDING",
     },
+    time: String,
     appointmentDate: Date,
     note: String,
   },
