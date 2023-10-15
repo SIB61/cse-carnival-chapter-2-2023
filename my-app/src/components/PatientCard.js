@@ -36,7 +36,7 @@ export default function PatientCard({ appointment }) {
         </div>
         <div>{appointment.note}</div>
         <Button asChild>
-          <Link href={`consultant/appointments/${appointment._id}`}>
+          <Link href={`/consultant/appointments/${appointment._id}`}>
             View Details
           </Link>
         </Button>

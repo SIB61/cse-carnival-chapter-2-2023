@@ -9,6 +9,7 @@ import Link from "next/link";
 export default function AppointmentInfo({ appointment }) {
   const [date, setDate] = useState(new Date(appointment.appointmentDate));
   const [time, setTime] = useState("");
+  const [requestStatus, setRequestStatus] = useState(appointment.status);
   const router = useRouter();
 
   const acceptRequest = async () => {
@@ -31,6 +32,9 @@ export default function AppointmentInfo({ appointment }) {
     );
     if (response.status === 200) {
       console.log(response);
+      setRequestStatus("APPROVED");
+    } else {
+      setRequestStatus("DECLINED");
     }
   };
   return (
@@ -66,19 +70,21 @@ export default function AppointmentInfo({ appointment }) {
       </div>
       <div className="flex flex-col items-center gap-5">
         <div className="font-semibold">Appointed Time</div>
-        {appointment.status === "PENDING" ? (
+        {requestStatus === "PENDING" ? (
           <Input
             className="w-40"
             placeholder="Time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
           ></Input>
-        ) : (
+        ) : requestStatus === "APPROVED" ? (
           <Button disabled>{appointment.time}</Button>
+        ) : (
+          <></>
         )}
       </div>
       <div className="flex gap-5 items-center justify-center">
-        {appointment.status === "PENDING" ? (
+        {requestStatus === "PENDING" ? (
           <>
             <Button onClick={acceptRequest} disabled={!time}>
               Accept Appointment Request
@@ -87,7 +93,7 @@ export default function AppointmentInfo({ appointment }) {
               Decline Appointment Request
             </Button>
           </>
-        ) : (
+        ) : requestStatus === "APPROVED" ? (
           <>
             <Button asChild>
               <Link href={`/chat?id=${appointment.consultee._id}`}>
@@ -95,6 +101,8 @@ export default function AppointmentInfo({ appointment }) {
               </Link>
             </Button>
           </>
+        ) : (
+          <></>
         )}
       </div>
     </div>
