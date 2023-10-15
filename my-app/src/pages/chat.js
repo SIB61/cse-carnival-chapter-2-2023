@@ -56,7 +56,7 @@ export default ({ conversation, chatUsers }) => {
   const session = useSession();
 
   return (
-    <div className="flex h-screen flex-1 p-2 gap-2">
+    <div key={router.query.id} className="flex h-screen flex-1 p-2 gap-2">
       <Card className="h-full w-72">
         <CardHeader>
           <CardTitle>Chats</CardTitle>
@@ -68,7 +68,9 @@ export default ({ conversation, chatUsers }) => {
                 variant="outline"
                 disabled={c._id === router.query.id}
                 className={c._id === router.query.id ? " bg-green-200" : ""}
-                onClick={() => router.push("/chat?id=" + c._id)}
+                onClick={() => {
+                  router.push({ pathname: "/chat", query: { id: c._id } });
+                }}
               >
                 {c.name}
               </Button>
@@ -83,6 +85,7 @@ export default ({ conversation, chatUsers }) => {
             <div className="flex flex-col gap-4 p-4">
               {c?.messages?.map((message) => (
                 <div
+                  key={message._id}
                   className={`${
                     message.from !== router.query.id
                       ? "flex justify-end"
@@ -142,6 +145,6 @@ export async function getServerSideProps({ req, res, query }) {
   console.log(chatUsers, us);
 
   return {
-    props: JSON.parse(JSON.stringify({ conversation, chatUsers })),
+    props: JSON.parse(JSON.stringify({ conversation, chatUsers, key: user2 })),
   };
 }
