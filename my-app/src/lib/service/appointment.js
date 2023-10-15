@@ -40,6 +40,7 @@ const getAppointments = async (req, res) => {
         appointmentDate: 1,
         note: 1,
         status: 1,
+        time: 1,
       },
       populate: {
         path: "consultee",
@@ -67,7 +68,54 @@ const getAppointment = async (id) => {
         dateOfBirth: 1,
       },
     })
-    .select("appointmentDate consultee note status -_id")
+    .select("appointmentDate consultee note status time -_id")
+    .lean();
+  return data;
+};
+
+const getAppointmentsByPatient = async (req, res) => {
+  await connectDb();
+  const session = await getServerSession(req, res, createOptions(req));
+  console.log(session);
+  const appointments = await user
+    .findById(session.user._id)
+    .populate({
+      path: "appointments",
+      select: {
+        appointmentDate: 1,
+        note: 1,
+        status: 1,
+        time: 1,
+      },
+      populate: {
+        path: "consultant",
+        select: {
+          image: 1,
+          name: 1,
+          dateOfBirth: 1,
+          consultantData: 1,
+        },
+      },
+    })
+    .select("appointments -_id")
+    .lean();
+  return appointments;
+};
+
+const getAppointmentByPatient = async (id) => {
+  await connectDb();
+  const data = await appointment
+    .findById(id)
+    .populate({
+      path: "consultant",
+      select: {
+        image: 1,
+        name: 1,
+        dateOfBirth: 1,
+        consultantData: 1,
+      },
+    })
+    .select("appointmentDate consultant note status time -_id")
     .lean();
   return data;
 };
@@ -99,4 +147,6 @@ export {
   getAppointments,
   getAppointment,
   updateAppointment,
+  getAppointmentByPatient,
+  getAppointmentsByPatient,
 };

@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function AppointmentInfo({ appointment }) {
   const [date, setDate] = useState(new Date(appointment.appointmentDate));
@@ -60,23 +61,41 @@ export default function AppointmentInfo({ appointment }) {
         <div>{appointment.note}</div>
       </div>
       <div className="flex flex-col items-center gap-5">
-        <div className="font-semibold self-start">Appointed Date</div>
+        <div className="font-semibold">Appointed Date</div>
         <Calendar mode="single" selected={date} className="rounded-md border" />
       </div>
       <div className="flex flex-col items-center gap-5">
-        <div className="font-semibold self-start">Appointed Date</div>
-        <Input
-          className="w-40"
-          placeholder="Time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        ></Input>
+        <div className="font-semibold">Appointed Time</div>
+        {appointment.status === "PENDING" ? (
+          <Input
+            className="w-40"
+            placeholder="Time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          ></Input>
+        ) : (
+          <Button disabled>{appointment.time}</Button>
+        )}
       </div>
       <div className="flex gap-5 items-center justify-center">
-        <Button onClick={acceptRequest} disabled={!time}>
-          Accept Appointment Request
-        </Button>
-        <Button onClick={declineRequest}>Decline Appointment Request</Button>
+        {appointment.status === "PENDING" ? (
+          <>
+            <Button onClick={acceptRequest} disabled={!time}>
+              Accept Appointment Request
+            </Button>
+            <Button onClick={declineRequest}>
+              Decline Appointment Request
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button asChild>
+              <Link href={`/chat?id=${appointment.consultee._id}`}>
+                Start Chatting
+              </Link>
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
