@@ -27,6 +27,7 @@ export default ({ conversation, chatUsers }) => {
   const [text, setText] = useState("");
   const router = useRouter();
   const [c, setC] = useState(conversation);
+  console.log(chatUsers);
   console.log(socket);
 
   const sendMessage = async () => {
@@ -62,7 +63,7 @@ export default ({ conversation, chatUsers }) => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-2">
-            {chatUsers.map((c) => (
+            {chatUsers?.map((c) => (
               <Button
                 variant="outline"
                 disabled={c._id === router.query.id}
@@ -131,12 +132,14 @@ export async function getServerSideProps({ req, res, query }) {
     },
   }).lean();
 
-  const { chatUsers } = await User.findOne({ _id: user1 })
+  const us = await User.findOne({ _id: user1 })
     .select("chatUsers")
     .populate("chatUsers")
     .lean();
 
-  console.log(chatUsers);
+  const { chatUsers } = us;
+
+  console.log(chatUsers, us);
 
   return {
     props: JSON.parse(JSON.stringify({ conversation, chatUsers })),
