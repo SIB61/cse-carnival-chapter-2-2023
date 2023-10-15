@@ -56,17 +56,17 @@ export default ({ conversation, chatUsers }) => {
 
   return (
     <div className="flex h-screen flex-1 p-2 gap-2">
-      <Card className="h-full w-72 p-4">
+      <Card className="h-full w-72">
         <CardHeader>
           <CardTitle>Chats</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             {chatUsers.map((c) => (
               <Button
                 variant="outline"
                 disabled={c._id === router.query.id}
-                className={c._id === router.query.id ? " bg-slate-300" : ""}
+                className={c._id === router.query.id ? " bg-green-200" : ""}
                 onClick={() => router.push("/chat?id=" + c._id)}
               >
                 {c.name}
@@ -76,7 +76,7 @@ export default ({ conversation, chatUsers }) => {
         </CardContent>
       </Card>
 
-      <Card className="flex-1 w-full p-2">
+      <Card className="flex-1 w-full p-2 bg-green-200">
         <CardContent className="h-full relative">
           <ScrollArea className="w-full  h-[calc(100%-50px)] ">
             <div className="flex flex-col gap-4 p-4">
@@ -90,9 +90,9 @@ export default ({ conversation, chatUsers }) => {
                 >
                   <div
                     className={`${
-                      message.from === session?.data?.user?._id
-                        ? " bg-slate-400"
-                        : " bg-blue-600"
+                      message.from !== router.query._id
+                        ? " bg-green-400"
+                        : " bg-green-600"
                     } p-2 rounded-md w-max`}
                   >
                     {message.text}
