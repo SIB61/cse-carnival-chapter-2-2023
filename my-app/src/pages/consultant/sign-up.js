@@ -21,12 +21,19 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { fields } from "@/lib/constants/depts";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function () {
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, formState, watch } = useForm();
   const { toast } = useToast();
+  const router = useRouter();
   const signUp = async (value) => {
+    setIsLoading(true);
     const formData = new FormData();
     Object.keys(value).forEach((k) => {
       if (k == "certificates") {
@@ -52,6 +59,8 @@ export default function () {
       });
       console.log(err);
     }
+    setIsLoading(false);
+    router.push(`/sign-in`);
   };
 
   return (
@@ -143,6 +152,7 @@ export default function () {
               <Label>Password</Label>
               <Input
                 placeholder="password"
+                type="password"
                 {...register("password", { required: true })}
               />
             </div>
@@ -151,13 +161,35 @@ export default function () {
               <Label>Confirm Password</Label>
               <Input
                 placeholder="confirm password"
+                type="password"
                 {...register("confirmPassword", {
                   required: true,
                   validate: (value) => value === watch("password"),
                 })}
               />
             </div>
-            <Button disabled={!formState.isValid}>Sign up</Button>
+            <Button disabled={!formState.isValid}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading ? "Please wait" : "Sign Up"}
+            </Button>
+            <div className="self-center">
+              <Link
+                href={"/user/sign-up"}
+                className=" cursor-pointer text-blue-500 underline"
+              >
+                Sign Up as a User
+              </Link>{" "}
+            </div>
+            <div className="self-center">
+              Already Registered?{" "}
+              <Link
+                href={"/sign-in"}
+                className=" cursor-pointer text-blue-500 underline"
+              >
+                Sign In
+              </Link>{" "}
+              here
+            </div>
           </form>
         </CardContent>
       </Card>
