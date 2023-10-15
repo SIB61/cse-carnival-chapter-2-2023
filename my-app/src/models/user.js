@@ -49,6 +49,7 @@ const userSchema = new mongoose.Schema({
       ref: "appointment",
     },
   ],
+  chatUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
 });
 
 export default mongoose.models?.user ?? mongoose.model("user", userSchema);

@@ -52,17 +52,21 @@ export const Layout = ({ children }) => {
               {r.name}
             </Button>
           ))}
+          <div className="flex-1 flex justify-center items-end">
+            {session.status === "authenticated" && (
+              <Button
+                onClick={() => signOut({ callbackUrl: "/sign-in" })}
+                variant="outline"
+                className="w-full"
+              >
+                <AiOutlineLogout />
+                Logout
+              </Button>
+            )}
+          </div>
         </div>
         <ScrollArea className="h-screen w-full">{children}</ScrollArea>
       </div>
-      <Button
-        onClick={() => signOut({ callbackUrl: "/sign-in" })}
-        variant="outline"
-        size="icon"
-        className="fixed top-4 right-4"
-      >
-        <AiOutlineLogout />
-      </Button>
     </>
   );
 };
