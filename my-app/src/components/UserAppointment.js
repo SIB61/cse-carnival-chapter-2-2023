@@ -9,15 +9,15 @@ import {
 } from "./ui/card";
 import { useEffect } from "react";
 
-export default function PatientCard({ appointment }) {
+export default function UserAppointmentSection({ appointment }) {
   return (
     <Card className="w-96 p-6 shadow-md">
       <div className="flex flex-col gap-5">
         <div className="flex gap-5">
           <div className="w-24 h-24 rounded-full overflow-hidden">
-            {appointment.consultee.image ? (
+            {appointment.consultant.image ? (
               <img
-                src={appointment.consultee.image}
+                src={appointment.consultant.image}
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -29,14 +29,14 @@ export default function PatientCard({ appointment }) {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-xl font-semibold leading-none tracking-tight">
-              {appointment.consultee.name}
+              {appointment.consultant.name}
             </div>
-            <div> {appointment.consultee.dateOfBirth}</div>
+            <div> {appointment.consultant.dateOfBirth}</div>
           </div>
         </div>
         <div>{appointment.note}</div>
         <Button asChild>
-          <Link href={`consultant/appointments/${appointment._id}`}>
+          <Link href={`/user/appointments/${appointment._id}`}>
             View Details
           </Link>
         </Button>
