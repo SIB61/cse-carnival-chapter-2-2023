@@ -1,5 +1,6 @@
 import UserAppointmentSection from "@/components/UserAppointment";
 import { getAppointmentsByPatient } from "@/lib/service/appointment";
+import appointment from "@/models/appointment";
 import { useEffect } from "react";
 
 export async function getServerSideProps({ req, res }) {
@@ -15,9 +16,13 @@ export default function ConsultantDashBoard({ data }) {
     <div className="flex flex-col p-8 gap-4">
       <div>Appointments</div>
       <div className="flex flex-wrap gap-6">
-        {data.appointments.map((appointment) => {
-          return <UserAppointmentSection appointment={appointment} />;
-        })}
+        {data.appointments.length > 0 ? (
+          data.appointments.map((appointment) => {
+            return <UserAppointmentSection appointment={appointment} />;
+          })
+        ) : (
+          <div>No appointments available</div>
+        )}
       </div>
     </div>
   );
