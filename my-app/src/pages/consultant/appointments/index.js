@@ -14,10 +14,12 @@ export default function ConsultantDashBoard({ data }) {
   return (
     <div className="flex flex-col p-4 gap-4">
       <div>Appointments</div>
-      {data.appointments.map((appointment) => {
-        console.log(appointment);
-        return <PatientCard appointment={appointment} />;
-      })}
+      <div className="flex flex-wrap gap-6">
+        {data.appointments.map((appointment) => {
+          console.log(appointment);
+          return <PatientCard appointment={appointment} />;
+        })}
+      </div>
     </div>
   );
 }
